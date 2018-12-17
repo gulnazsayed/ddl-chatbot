@@ -1,7 +1,8 @@
 # author: Gulnaz Sayed
-# built from ATAP Chatbot
+# built from ATAP Chatbot Chapter
 
 import abc
+import re
 from collections.abc import Sequence
 from operator import itemgetter
 
@@ -126,8 +127,10 @@ class Greeting(Dialog):
     }
 
     def __init__(self, participants=None):
-        # Participants is a map of user name to real name self.participants = {}
+        # Participants is a map of user name to real name
+        self.participants = {}
         if participants is not None:
+            print("enters if statement")
             for participant in participants:
                 self.participants[participant] = None
 
@@ -225,10 +228,13 @@ class Greeting(Dialog):
             "expected response to be returned, but could not find rule"
         )
 
-    if __name__ == '__main__':
-        dialog = Greeting()
-        # `listen` returns (response, confidence) tuples; just print the response
-        print(dialog.listen("Hello!", user="jakevp321")[0])
-        print(dialog.listen("my name is Jake", user="jakevp321")[0])
-        print(dialog.listen("Roll call!", user="jakevp321")[0])
-        print(dialog.listen("Have to go, goodbye!", user="jakevp321")[0])
+# if __name__ == '__main__':
+dialog = Greeting()
+# `listen` returns (response, confidence) tuples; just print the response
+print(dialog.listen("Hello!", user="jakevp321")[0])
+print(dialog.listen("my name is Jake", user="jakevp321")[0])
+print(dialog.listen("Roll call!", user="jakevp321")[0])
+print(dialog.listen("Have to go, goodbye!", user="jakevp321")[0])
+print(dialog.listen("hey", user="jillmonger")[0])
+print(dialog.listen("my name is Jill.", user="jillmonger")[0])
+print(dialog.listen("who's here?")[0])
