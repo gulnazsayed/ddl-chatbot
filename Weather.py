@@ -3,7 +3,6 @@
 
 import abc
 import re
-# import pytest
 from collections.abc import Sequence
 from operator import itemgetter
 
