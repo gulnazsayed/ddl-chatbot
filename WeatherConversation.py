@@ -3,6 +3,7 @@
 
 import abc
 import re
+# import pytest
 from collections.abc import Sequence
 from operator import itemgetter
 
@@ -123,7 +124,8 @@ class Greeting(Dialog):
         'greeting': r'hello|hi|hey|good morning|good evening',
         'introduction': r'my name is ([a-z\-\s]+)',
         'goodbye': r'goodbye|bye|ttyl',
-        'weather': r'weather|day',
+        'rollcall': r'roll call|who\'s here?',
+        'weather': r'weather|what\'s the weather like today?',
     }
 
     def __init__(self, participants=None):
@@ -225,7 +227,7 @@ class Greeting(Dialog):
                 return "So lonely in here by myself ... wait who is that?"
 
         if 'weather' in sents:
-            return "It's a sunny day."
+            return "It is a sunny day."
 
         raise Exception(
             "expected response to be returned, but could not find rule"
@@ -233,7 +235,6 @@ class Greeting(Dialog):
 
 dialog = Greeting()
 # `listen` returns (response, confidence) tuples; just print the response
-print(dialog.listen("who's here?")[0])
 print(dialog.listen("Hello!", user="jakevp321")[0])
 print(dialog.listen("my name is Jake", user="jakevp321")[0])
 print(dialog.listen("Roll call!", user="jakevp321")[0])
