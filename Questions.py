@@ -4,7 +4,6 @@
 import spacy
 from spacy import displacy
 
-# Required first: python -m spacy download en
 spacy_nlp = spacy.load("en")
 
 def plot_displacy_tree(sent):
