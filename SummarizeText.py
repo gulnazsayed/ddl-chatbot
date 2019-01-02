@@ -93,4 +93,4 @@ def extractive_summarization(text):
 
 term = input("What would you like to search on Wikipedia? ")
 doc = retrieve_text(term)
-temp(doc)
+extractive_summarization(doc)
