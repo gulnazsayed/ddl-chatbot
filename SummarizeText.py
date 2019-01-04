@@ -2,12 +2,12 @@
 # Text Summarization & Question-Answering Chatbot Model
 # Author: Gulnaz Sayed
 
+# nltk.download('stopwords')
+# nltk.download('punkt')
 import wikipedia
 import tensorflow as tf
 from stanfordcorenlp import StanfordCoreNLP
 import nltk
-# nltk.download('stopwords')
-# nltk.download('punkt')
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem.snowball import SnowballStemmer
@@ -26,37 +26,32 @@ def prepareText(document):
     # TO-DO
     return document
 
-# ABSTRACTIVE SUMMARIZATION MODEL
-# This method tokenizes all of the sentences in the Wikipedia summary.
-def sentence_tokenize():
-    stopWords = set(stopwords.words("english"))
-    words = word_tokenize(text)
+# SUMMARIZATION MODELS
 
+# Basic model for abstractive text summarization
 def encode():
     # You would need to download pre-trained models first
-    model = skipthoughts.load_model()
+    # model = skipthoughts.load_model()
+    #
+    # encoder = skipthoughts.Encoder(model)
+    # encoded = encoder.encode(sentences)
 
-    encoder = skipthoughts.Encoder(model)
-    encoded = encoder.encode(sentences)
-
-
-# Basic model of extractive summarization
+# Basic model for extractive text summarization
 # Ranks the importance of the sentences and then builds the summary using the most important sentences
 def extractive_summarization(text):
     # stemmer is used to get the root word (ex. generously --> generous)
-    stemmer = SnowballStemmer("english")
-    stopWords = set(stopwords.words("english"))
-    words = word_tokenize(text)
+    stem = SnowballStemmer("english")
 
-    # print((words))
+    stop_words = set(stopwords.words("english"))
+    words = word_tokenize(text)
 
     freqTable = dict()
     for word in words:
         word = word.lower()
-        if word in stopWords:
+        if word in stop_words:
             continue
 
-        word = stemmer.stem(word)
+        word = stem.stem(word)
 
         if word in freqTable:
             freqTable[word] += 1
@@ -64,33 +59,34 @@ def extractive_summarization(text):
             freqTable[word] = 1
 
     sentences = sent_tokenize(text)
-    sentenceValue = dict()
+    sentence_value = dict()
 
     for sentence in sentences:
         for word, freq in freqTable.items():
             if word in sentence.lower():
-                if sentence in sentenceValue:
-                    sentenceValue[sentence] += freq
+                if sentence in sentence_value:
+                    sentence_value[sentence] += freq
                 else:
-                    sentenceValue[sentence] = freq
+                    sentence_value[sentence] = freq
 
-    sumValues = 0
-    for sentence in sentenceValue:
-        sumValues += sentenceValue[sentence]
+    sum_values = 0
+    for sentence in sentence_value:
+        sum_values += sentence_value[sentence]
 
     # Average value of a sentence from original text
-    average = int(sumValues / len(sentenceValue))
+    average = int(sum_values / len(sentence_value))
 
     summary = ''
     for sentence in sentences:
-        if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.2 * average)):
+        if (sentence in sentence_value) and (sentence_value[sentence] > (1.2 * average)):
             summary += " " + sentence
 
-    print(summary)
+    return summary
 
 # QUESTION PARSING AND ANSWER GENERATION MODEL
-
+# Currently in separate file for testing purposes
 
 term = input("What would you like to search on Wikipedia? ")
 doc = retrieve_text(term)
-extractive_summarization(doc)
+extractive_summary = extractive_summarization(doc)
+# abstractice_summary = abstractive_summarization(doc)
