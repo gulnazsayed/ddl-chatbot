@@ -11,7 +11,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem.snowball import SnowballStemmer
-# import skipthoughts
 
 # User inputs search term and the summary of the respective Wikipedia page summary is retrieved from the web.
 # Returns the summary of the resulting Wikipedia page.
@@ -26,19 +25,9 @@ def prepareText(document):
     # TO-DO
     return document
 
-# SUMMARIZATION MODELS
-
-# Basic model for abstractive text summarization
-def encode():
-    # You would need to download pre-trained models first
-    # model = skipthoughts.load_model()
-    #
-    # encoder = skipthoughts.Encoder(model)
-    # encoded = encoder.encode(sentences)
-
 # Basic model for extractive text summarization
 # Ranks the importance of the sentences and then builds the summary using the most important sentences
-def extractive_summarization(text):
+def basic_extractive(text):
     # stemmer is used to get the root word (ex. generously --> generous)
     stem = SnowballStemmer("english")
 
@@ -88,5 +77,4 @@ def extractive_summarization(text):
 
 term = input("What would you like to search on Wikipedia? ")
 doc = retrieve_text(term)
-extractive_summary = extractive_summarization(doc)
-# abstractice_summary = abstractive_summarization(doc)
+extractive_summary = basic_extractive(doc)
