@@ -1,5 +1,22 @@
 # WILL BE ADDED TO SUMMARIZETEXT UPON COMPLETION
 
+# ALL IMPORTS
+from stanfordcorenlp import StanfordCoreNLP
+import re
+from nltk.tree import Tree
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import operator
+from pattern.en import conjugate
+from pattern.en import tenses
+from nltk.stem import WordNetLemmatizer
+wordnet_lemmatizer = WordNetLemmatizer()
+from nltk import word_tokenize, pos_tag, ne_chunk
+from functools import reduce
+
 # function to parse a given sentence
 def parse(sentence):
     nlp = StanfordCoreNLP(path_or_host='http://localhost', port=9000, timeout=30000)
@@ -541,3 +558,5 @@ def generate_q(corpus,NE):
     # clean wrong symbols in questions
     questions = [period_space_corr(question.replace('-LRB- ','(')).replace(' -RRB-',')')for question in questions]
     return questions
+
+print(generate_q())
