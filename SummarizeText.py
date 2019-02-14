@@ -316,8 +316,8 @@ class Greeting(Dialog):
 dialog = Greeting()
 # `listen` returns (response, confidence) tuples; just print the response
 print(dialog.listen("Hello!", user="gulnaz")[0])
-name = input("Enter your name here: ");
-print(dialog.listen(name, user="gulnaz")[0])
+name = input("");
+print(dialog.listen("my name is " + name, user="gulnaz")[0])
 term = input("What would you like to search on Wikipedia? ")
 doc = retrieve_text(term)
 extractive_summary = basic_extractive(doc)
